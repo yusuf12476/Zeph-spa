@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Zeph Haven Holistic Spa | Luxury Spa &amp; Massage in Diani Beach, Kenya</title>
+<meta name="description" content="Zeph Haven Holistic Spa in Diani Beach — Swedish, deep tissue &amp; couples massage, facials, waxing and body treatments. A haven of mind, body and soul." />
+<meta name="keywords" content="Spa in Diani, Massage in Diani, Holistic Spa Kenya, Swedish Massage Diani, Deep Tissue Massage Diani, Couples Massage Diani, Waxing Diani, Facials Diani, Luxury Spa Kenya, Wellness Centre Diani" />
+<meta property="og:title" content="Zeph Haven Holistic Spa — A Haven of Mind, Body &amp; Soul" />
+<meta property="og:description" content="Luxurious holistic spa treatments in Diani Beach, Kenya. Massages, facials, waxing &amp; body treatments in a peaceful, private setting." />
+<meta property="og:type" content="business.business" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌿</text></svg>" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Jost:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+
+<style>
+  :root{
+    --sage: #7C8B6E;
+    --sage-dark: #4F5D42;
+    --sage-deeper: #3A4534;
+    --gold: #B8935A;
+    --gold-light: #D9BD8C;
+    --cream: #F6F1E7;
+    --cream-dark: #EBE1CC;
+    --ink: #2B2820;
+    --ink-soft: #57523F;
+    --white: #FFFDF8;
+    --shadow: 0 20px 50px -25px rgba(43,40,32,0.35);
+    --ease: cubic-bezier(.22,.61,.36,1);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Jost', sans-serif;
+    font-weight:400;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    line-height:1.08;
+    margin:0 0 .4em;
+    color:var(--sage-deeper);
+    letter-spacing:-.01em;
+  }
+  p{ margin:0 0 1em; color:var(--ink-soft); }
+  a{ color:inherit; text-decoration:none; }
+  img{ max-width:100%; display:block; }
+  .eyebrow{
+    font-family:'Space Mono', monospace;
+    font-size:.72rem;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--gold);
+    display:block;
+    margin-bottom:.9em;
+  }
+  section{ padding: clamp(60px, 9vw, 120px) 24px; }
+  section.page{ padding:0; }
+  .wrap{ max-width:1160px; margin:0 auto; }
+  .center{ text-align:center; margin-left:auto; margin-right:auto; }
+  .btn{
+    display:inline-flex; align-items:center; gap:.5em;
+    font-family:'Jost',sans-serif; font-weight:500; font-size:.95rem;
+    padding:.95em 1.9em; border-radius:100px; border:1px solid transparent;
+    cursor:pointer; transition:transform .45s var(--ease), background .3s, color .3s, border-color .3s;
+    letter-spacing:.01em;
+  }
+  .btn:hover{ transform:translateY(-2px); }
+  .btn-gold{ background:var(--gold); color:var(--white); }
+  .btn-gold:hover{ background:var(--sage-deeper); }
+  .btn-outline{ background:transparent; border-color:rgba(43,40,32,.25); color:var(--ink); }
+  .btn-outline:hover{ border-color:var(--gold); color:var(--gold); }
+  .btn-outline-light{ background:transparent; border-color:rgba(255,253,248,.5); color:var(--white); }
+  .btn-outline-light:hover{ border-color:var(--gold-light); color:var(--gold-light); }
+
+  /* -------- tide divider (signature element) -------- */
+  .tide{ width:100%; height:56px; display:block; margin:0; }
+  .tide path{ animation: breathe 7s ease-in-out infinite; transform-origin:center; }
+  @keyframes breathe{
+    0%,100%{ d: path("M0,30 C 200,10 400,50 600,30 C 800,10 1000,50 1200,30 L1200,60 L0,60 Z"); }
+    50%{ d: path("M0,30 C 200,50 400,10 600,30 C 800,50 1000,10 1200,30 L1200,60 L0,60 Z"); }
+  }
+  @media (prefers-reduced-motion: reduce){ .tide path{ animation:none; } }
+
+  /* ======== PAGES (SPA-style, one file) ======== */
+  .page{ display:none; }
+  .page.active{ display:block; animation:pageIn .4s var(--ease); }
+  @keyframes pageIn{ from{ opacity:0; transform:translateY(8px);} to{ opacity:1; transform:none;} }
+
+  /* ======== NAV ======== */
+  header.site-header{
+    position:fixed; top:0; left:0; right:0; z-index:200;
+    --hdr-fg: var(--white);
+    --hdr-fg-soft: rgba(255,253,248,.82);
+    --hdr-tag: var(--gold-light);
+    background:transparent;
+    border-bottom:1px solid transparent;
+    transition:background .4s var(--ease), box-shadow .4s var(--ease), border-color .4s var(--ease), padding .35s var(--ease);
+  }
+  header.site-header.scrolled{
+    --hdr-fg: var(--sage-deeper);
+    --hdr-fg-soft: var(--ink-soft);
+    --hdr-tag: var(--gold);
+    background:rgba(246,241,231,.92); backdrop-filter:blur(10px);
+    border-bottom-color:rgba(79,93,66,.12);
+    box-shadow:0 12px 30px -20px rgba(43,40,32,.3);
+  }
+  /* the mobile drawer is opaque cream regardless of scroll, so force dark
+     header content whenever it's open (the toggle button sits against it) */
+  body.nav-open header.site-header{
+    --hdr-fg: var(--sage-deeper);
+    --hdr-fg-soft: var(--ink-soft);
+    --hdr-tag: var(--gold);
+  }
+  .nav-inner{
+    max-width:1160px; margin:0 auto; padding:16px 24px;
+    display:flex; align-items:center; justify-content:space-between; gap:20px;
+    position:relative; transition:padding .35s var(--ease);
+  }
+  header.site-header.scrolled .nav-inner{ padding-top:11px; padding-bottom:11px; }
+
+  .brand{ display:flex; align-items:center; gap:10px; cursor:pointer; }
+  .brand-mark{ width:32px; height:32px; flex:0 0 auto; color:var(--hdr-fg); transition:transform .45s var(--ease), color .4s var(--ease); }
+  .brand:hover .brand-mark{ transform:rotate(-10deg) scale(1.06); }
+  .brand-text{ display:flex; flex-direction:column; }
+  .brand-name{ font-family:'Fraunces',serif; font-size:1.25rem; color:var(--hdr-fg); font-weight:600; line-height:1.1; transition:color .4s var(--ease); }
+  .brand-tag{ font-family:'Space Mono',monospace; font-size:.62rem; letter-spacing:.14em; color:var(--hdr-tag); text-transform:uppercase; transition:color .4s var(--ease); }
+
+  nav.nav-links{ display:flex; gap:26px; align-items:center; }
+  nav.nav-links a{ font-size:.9rem; color:var(--hdr-fg-soft); transition:color .25s; position:relative; white-space:nowrap; cursor:pointer; }
+  nav.nav-links a:hover{ color:var(--hdr-fg); }
+  nav.nav-links a.current{ color:var(--hdr-fg); font-weight:500; }
+  nav.nav-links a:not(.btn)::after{
+    content:''; position:absolute; left:0; right:0; bottom:-8px; height:2px; background:var(--hdr-tag);
+    transform:scaleX(0); transform-origin:center; transition:transform .3s var(--ease);
+  }
+  nav.nav-links a:not(.btn):hover::after, nav.nav-links a.current::after{ transform:scaleX(1); }
+  nav.nav-links a.btn{ padding:.65em 1.5em; }
+
+  /* the drawer panel itself is always solid cream with dark ink, whatever
+     the header state — only the collapsed bar's own text swaps color */
+  @media (max-width:880px){
+    nav.nav-links a{ color:var(--ink-soft); }
+    nav.nav-links a:hover, nav.nav-links a.current{ color:var(--sage-deeper); }
+    nav.nav-links a:not(.btn)::after{ background:var(--gold); }
+  }
+
+  .nav-mobile-contact{ display:none; }
+
+  /* hamburger icon */
+  .menu-toggle{
+    display:none; position:relative; z-index:210;
+    width:42px; height:42px; border:none; border-radius:50%; background:transparent; cursor:pointer;
+    flex-direction:column; align-items:center; justify-content:center; gap:5px;
+    padding:0; transition:background .25s var(--ease);
+  }
+  .menu-toggle:hover{ background:rgba(79,93,66,.1); }
+  .menu-toggle span{
+    display:block; width:22px; height:2px; background:var(--hdr-fg);
+    transition:transform .3s var(--ease), opacity .3s var(--ease), background .4s var(--ease);
+  }
+  .menu-toggle.is-active span:nth-child(1){ transform:translateY(7px) rotate(45deg); }
+  .menu-toggle.is-active span:nth-child(2){ opacity:0; }
+  .menu-toggle.is-active span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
+
+  @media (max-width:880px){
+    .menu-toggle{ display:flex; }
+    nav.nav-links{
+      position:fixed; z-index:205;
+      top:0; right:0; bottom:0; width:min(78vw, 320px);
+      background:var(--cream); box-shadow:-10px 0 40px -20px rgba(43,40,32,.4);
+      flex-direction:column; align-items:flex-start; justify-content:flex-start;
+      padding:96px 32px 40px; gap:26px;
+      transform:translateX(100%);
+      transition:transform .4s var(--ease);
+      overflow-y:auto;
+    }
+    nav.nav-links.is-open{ transform:translateX(0); }
+    nav.nav-links a.btn{ margin-top:6px; }
+    body.nav-open{ overflow:hidden; }
+
+    .nav-mobile-contact{
+      display:flex; flex-direction:column; gap:14px; width:100%;
+      margin-top:30px; padding-top:24px; border-top:1px solid rgba(79,93,66,.15);
+    }
+    .nav-mobile-contact a{
+      display:flex; align-items:center; gap:10px; font-size:.85rem; color:var(--ink-soft);
+    }
+    .nav-mobile-contact a:hover{ color:var(--sage-deeper); }
+    .nav-mobile-contact .ic{ font-size:1.05rem; }
+  }
+
+  .nav-backdrop{
+    display:none;
+    position:fixed; inset:0; z-index:190;
+    background:rgba(43,40,32,.35);
+  }
+  .nav-backdrop.is-open{ display:block; }
+
+  /* backdrop-filter on the header creates a containing block for its
+     fixed-position descendants, which clips the mobile nav drawer to the
+     header's own height instead of the full viewport. Drop it while the
+     menu is open so the drawer positions against the viewport correctly. */
+  body.nav-open header.site-header{ backdrop-filter:none; }
+
+  /* ======== PAGE HERO (non-home pages) ======== */
+  .page-hero{
+    background: radial-gradient(120% 140% at 15% 0%, #7C8B6E 0%, #4F5D42 46%, #3A4534 100%);
+    color:var(--white); padding: clamp(70px,10vw,110px) 24px clamp(50px,7vw,70px); text-align:center;
+  }
+  .page-hero .eyebrow{ color:var(--gold-light); }
+  .page-hero h1{ color:var(--white); font-size:clamp(2.2rem,5vw,3.4rem); font-weight:400; }
+  .page-hero p{ color:rgba(255,253,248,.82); max-width:560px; margin:14px auto 0; }
+
+  /* ======== HOME HERO ======== */
+  .hero{
+    position:relative; overflow:hidden;
+    background: radial-gradient(120% 140% at 15% 0%, #7C8B6E 0%, #4F5D42 46%, #3A4534 100%);
+    padding: clamp(90px,14vw,150px) 24px clamp(70px,10vw,110px);
+    color:var(--white);
+  }
+  .hero::before{
+    content:''; position:absolute; inset:0; opacity:.15; pointer-events:none;
+    background-image: radial-gradient(circle at 20% 30%, #D9BD8C 0, transparent 40%), radial-gradient(circle at 85% 75%, #D9BD8C 0, transparent 35%);
+  }
+  .hero-inner{ max-width:820px; margin:0 auto; text-align:center; position:relative; }
+  .hero .eyebrow{ color:var(--gold-light); }
+  .hero h1{
+    color:var(--white); font-size:clamp(2.4rem, 6vw, 4.1rem); font-weight:400;
+    animation: breatheScale 6.5s ease-in-out infinite;
+  }
+  .hero h1 em{ font-style:italic; color:var(--gold-light); font-weight:300; }
+  @keyframes breatheScale{
+    0%,100%{ transform:scale(1); }
+    50%{ transform:scale(1.018); }
+  }
+  @media (prefers-reduced-motion: reduce){ .hero h1{ animation:none; } }
+  .hero p.lead{ color:rgba(255,253,248,.86); font-size:1.08rem; max-width:620px; margin:22px auto 34px; }
+  .hero-ctas{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+
+  .hero-glow{
+    position:absolute; border-radius:50%; filter:blur(60px); pointer-events:none; z-index:0;
+  }
+  .hero-glow-a{ width:380px; height:380px; background:rgba(217,189,140,.28); top:-120px; right:-80px; }
+  .hero-glow-b{ width:300px; height:300px; background:rgba(124,139,110,.35); bottom:-140px; left:-70px; }
+  .hero-inner{ z-index:1; }
+
+  .hero-badges{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:34px; position:relative; z-index:1; }
+  .hero-badge{
+    display:inline-flex; align-items:center; gap:7px;
+    font-family:'Space Mono',monospace; font-size:.7rem; letter-spacing:.04em;
+    color:rgba(255,253,248,.88); background:rgba(255,253,248,.08);
+    border:1px solid rgba(255,253,248,.18); padding:.55em 1.1em; border-radius:100px;
+  }
+
+  /* -------- floating quick-link cards -------- */
+  .quick-wrap{ position:relative; z-index:3; margin-top:-64px; padding:0 24px; }
+  .quick-grid{
+    max-width:1160px; margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); gap:16px;
+  }
+  @media (max-width:860px){ .quick-grid{ grid-template-columns:repeat(2,1fr); } }
+  .quick-card{
+    display:block; background:var(--white); border-radius:4px 22px; padding:26px 20px; text-align:center;
+    box-shadow:var(--shadow); border:1px solid rgba(79,93,66,.1); cursor:pointer;
+    transition:transform .35s var(--ease), border-color .3s, box-shadow .35s var(--ease);
+  }
+  .quick-card:hover{ transform:translateY(-6px); border-color:var(--gold); }
+  .quick-ic{
+    width:46px; height:46px; margin:0 auto 14px; border-radius:50%;
+    background:linear-gradient(155deg, var(--sage) 0%, var(--sage-dark) 100%);
+    display:flex; align-items:center; justify-content:center; color:var(--white);
+  }
+  .quick-ic svg{ width:22px; height:22px; }
+  .quick-card h4{ font-size:.98rem; margin-bottom:.2em; color:var(--sage-deeper); }
+  .quick-card p{ font-size:.8rem; margin:0; }
+
+  /* -------- about visual, upgraded -------- */
+  .about-visual{ position:relative; }
+  .about-badge{
+    position:absolute; left:-18px; bottom:-18px; z-index:2;
+    background:var(--white); border-radius:4px 18px; box-shadow:var(--shadow);
+    padding:16px 20px; display:flex; align-items:center; gap:12px;
+    font-family:'Space Mono',monospace; font-size:.72rem; letter-spacing:.04em;
+    color:var(--sage-deeper); border:1px solid rgba(79,93,66,.12);
+  }
+  .about-badge .ic{ font-size:1.4rem; }
+  @media (max-width:820px){ .about-badge{ left:14px; bottom:14px; } }
+
+  /* -------- why choose us, upgraded -------- */
+  .why-item{ position:relative; transition:background .3s var(--ease); }
+  .why-item:hover{ background:var(--cream); }
+  .why-ic{
+    width:44px; height:44px; border-radius:50%; margin-bottom:16px;
+    background:linear-gradient(155deg, var(--gold-light) 0%, var(--gold) 100%);
+    display:flex; align-items:center; justify-content:center; color:var(--white);
+  }
+  .why-ic svg{ width:20px; height:20px; }
+
+  /* -------- scroll reveal -------- */
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
+  .reveal.in{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion: reduce){ .reveal{ opacity:1; transform:none; transition:none; } }
+
+  /* -------- about -------- */
+  .about-grid{ display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center; }
+  .about-visual{
+    aspect-ratio:4/5; border-radius:6px 60px 6px 60px; overflow:hidden; position:relative;
+    background: linear-gradient(155deg, var(--sage) 0%, var(--sage-dark) 60%, var(--sage-deeper) 100%);
+    box-shadow:var(--shadow);
+  }
+  .about-visual::after{
+    content:'🌿'; position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    font-size:5rem; opacity:.5; filter:grayscale(.2);
+  }
+  @media (max-width:820px){ .about-grid{ grid-template-columns:1fr; } .about-visual{ order:-1; aspect-ratio:16/9; } }
+
+  /* -------- services -------- */
+  .tabs{ display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-bottom:44px; }
+  .tab-btn{
+    font-family:'Space Mono',monospace; font-size:.75rem; letter-spacing:.05em; text-transform:uppercase;
+    padding:.7em 1.3em; border-radius:100px; border:1px solid rgba(79,93,66,.25); background:transparent;
+    color:var(--ink-soft); cursor:pointer; transition:all .3s var(--ease);
+  }
+  .tab-btn.active, .tab-btn:hover{ background:var(--sage-deeper); border-color:var(--sage-deeper); color:var(--white); }
+  .service-panel{ display:none; }
+  .service-panel.active{ display:block; animation:fadeUp .5s var(--ease); }
+  @keyframes fadeUp{ from{ opacity:0; transform:translateY(10px);} to{ opacity:1; transform:none;} }
+  .service-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(230px,1fr)); gap:16px; }
+  .service-card{
+    background:var(--white); border:1px solid rgba(79,93,66,.14); border-radius:4px 22px;
+    padding:22px 22px 24px; transition:transform .35s var(--ease), box-shadow .35s var(--ease), border-color .3s;
+  }
+  .service-card:hover{ transform:translateY(-4px); box-shadow:var(--shadow); border-color:var(--gold); }
+  .service-card h4{ font-size:1.05rem; margin-bottom:.25em; color:var(--sage-deeper); }
+  .service-card span{ font-family:'Space Mono',monospace; font-size:.68rem; color:var(--gold); letter-spacing:.08em; text-transform:uppercase; }
+
+  /* -------- why choose us -------- */
+  .why-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:2px; background:rgba(79,93,66,.14); border:1px solid rgba(79,93,66,.14); border-radius:14px; overflow:hidden; }
+  .why-item{ background:var(--white); padding:32px 26px; }
+  .why-item .mark{ font-family:'Fraunces',serif; font-style:italic; font-size:1.6rem; color:var(--gold); margin-bottom:.3em; display:block; }
+  .why-item h4{ font-size:1rem; margin-bottom:.3em; }
+  .why-item p{ font-size:.9rem; margin:0; }
+
+  /* -------- gallery -------- */
+  .gallery-grid{ display:grid; grid-template-columns:repeat(4,1fr); grid-auto-rows:150px; gap:10px; }
+  .gallery-grid .g-item:nth-child(7n+1){ grid-column:span 2; grid-row:span 2; }
+  .g-item{
+    border-radius:8px; position:relative; overflow:hidden; display:flex; align-items:flex-end;
+    background:linear-gradient(155deg, var(--sage) 0%, var(--gold) 130%);
+  }
+  .g-item span{
+    font-family:'Space Mono',monospace; font-size:.68rem; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--white); background:rgba(43,40,32,.35); width:100%; padding:10px 12px;
+  }
+  @media (max-width:760px){
+    .gallery-grid{ grid-template-columns:repeat(2,1fr); }
+    .gallery-grid .g-item:nth-child(7n+1){ grid-column:span 2; grid-row:span 1; }
+  }
+
+  /* -------- testimonials -------- */
+  .testi-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:22px; }
+  .testi-card{
+    background:var(--white); border-radius:4px 26px; padding:30px 26px; border:1px solid rgba(79,93,66,.14);
+    position:relative;
+  }
+  .testi-card::before{ content:'"'; font-family:'Fraunces',serif; font-style:italic; font-size:3rem; color:var(--gold-light); position:absolute; top:6px; left:18px; line-height:1; }
+  .testi-card p{ position:relative; z-index:1; color:var(--ink); font-style:italic; margin-top:14px; }
+  .testi-name{ font-family:'Space Mono',monospace; font-size:.72rem; letter-spacing:.06em; text-transform:uppercase; color:var(--gold); }
+
+  /* -------- booking -------- */
+  .book-section{ background:var(--sage-deeper); color:var(--white); border-radius:26px; padding:clamp(30px,5vw,56px); }
+  .book-section .eyebrow{ color:var(--gold-light); }
+  .book-section h2{ color:var(--white); }
+  .book-section p{ color:rgba(255,253,248,.75); }
+  .book-grid{ display:grid; grid-template-columns:.9fr 1.1fr; gap:50px; align-items:flex-start; }
+  @media (max-width:880px){ .book-grid{ grid-template-columns:1fr; } }
+  .book-info-item{ display:flex; gap:14px; margin-bottom:20px; align-items:flex-start; }
+  .book-info-item .ic{ font-size:1.2rem; }
+  .book-info-item strong{ display:block; font-family:'Space Mono',monospace; font-size:.68rem; letter-spacing:.08em; text-transform:uppercase; color:var(--gold-light); margin-bottom:.2em; }
+
+  form#bookingForm{ display:grid; grid-template-columns:1fr 1fr; gap:14px; background:rgba(255,253,248,.06); padding:28px; border-radius:16px; border:1px solid rgba(255,253,248,.14); }
+  form#bookingForm .full{ grid-column:1/-1; }
+  @media (max-width:600px){
+    form#bookingForm{ grid-template-columns:1fr; padding:20px; }
+    form#bookingForm .full{ grid-column:auto; }
+  }
+  form#bookingForm label{ font-family:'Space Mono',monospace; font-size:.65rem; letter-spacing:.08em; text-transform:uppercase; color:var(--gold-light); display:block; margin-bottom:6px; }
+  form#bookingForm input, form#bookingForm select, form#bookingForm textarea{
+    width:100%; padding:.85em 1em; border-radius:8px; border:1px solid rgba(255,253,248,.25);
+    background:rgba(255,253,248,.94); color:var(--ink); font-family:'Jost',sans-serif; font-size:.92rem;
+  }
+  form#bookingForm textarea{ resize:vertical; min-height:70px; }
+  form#bookingForm input:focus, form#bookingForm select:focus, form#bookingForm textarea:focus{
+    outline:2px solid var(--gold-light); outline-offset:1px;
+  }
+  #formMsg{ font-family:'Space Mono',monospace; font-size:.78rem; margin-top:14px; min-height:1.2em; }
+  #formMsg.ok{ color:#C9E4B8; }
+  #formMsg.err{ color:#E4B8B8; }
+
+  /* -------- contact -------- */
+  .contact-grid{ display:grid; grid-template-columns:1fr 1fr; gap:40px; }
+  @media (max-width:880px){ .contact-grid{ grid-template-columns:1fr; } }
+  .map-frame{ border-radius:16px; overflow:hidden; border:1px solid rgba(79,93,66,.18); height:100%; min-height:320px; }
+  .map-frame iframe{ width:100%; height:100%; min-height:320px; border:0; display:block; }
+  .contact-list a{ display:flex; align-items:center; gap:12px; padding:16px 0; border-bottom:1px solid rgba(79,93,66,.14); transition:color .25s; }
+  .contact-list a:hover{ color:var(--gold); }
+  .contact-list .ic{ font-size:1.15rem; width:26px; }
+
+  /* -------- socials -------- */
+  .social-row{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+  .social-pill{
+    display:flex; align-items:center; gap:8px; padding:.7em 1.4em; border-radius:100px;
+    border:1px solid rgba(79,93,66,.25); font-size:.88rem; transition:all .3s var(--ease);
+  }
+  .social-pill:hover{ background:var(--sage-deeper); color:var(--white); border-color:var(--sage-deeper); }
+
+  /* -------- footer -------- */
+  footer{ background:var(--ink); color:rgba(255,253,248,.7); padding:60px 24px 26px; }
+  .footer-inner{ max-width:1160px; margin:0 auto; display:grid; grid-template-columns:1.3fr 1fr 1fr; gap:40px; }
+  @media (max-width:760px){ .footer-inner{ grid-template-columns:1fr; } }
+  footer h3{ color:var(--gold-light); font-size:1.1rem; }
+  footer a{ color:rgba(255,253,248,.7); cursor:pointer; }
+  footer a:hover{ color:var(--gold-light); }
+  .footer-bottom{ max-width:1160px; margin:40px auto 0; padding-top:22px; border-top:1px solid rgba(255,253,248,.12); font-size:.8rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+
+  .float-wa{
+    position:fixed; bottom:22px; right:22px; z-index:60; background:#4F5D42; color:var(--white);
+    width:56px; height:56px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-size:1.5rem; box-shadow:0 10px 30px -8px rgba(43,40,32,.5); transition:transform .3s var(--ease);
+  }
+  .float-wa:hover{ transform:scale(1.08); }
+
+  ::selection{ background:var(--gold-light); color:var(--ink); }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-inner">
+    <a class="brand" data-page="home">
+      <svg class="brand-mark" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="19" stroke="var(--hdr-tag)" stroke-width="1.2"/>
+        <path d="M20 8c4 4.5 6 8.5 6 12.2C26 25 23.3 28 20 28s-6-3-6-7.8C14 16.5 16 12.5 20 8Z" stroke="var(--hdr-fg)" stroke-width="1.3"/>
+      </svg>
+      <span class="brand-text">
+        <span class="brand-name">Zeph Haven</span>
+        <span class="brand-tag">Holistic Spa</span>
+      </span>
+    </a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav-links" id="navLinks">
+      <a data-page="home">Home</a>
+      <a data-page="about">About</a>
+      <a data-page="services">Services</a>
+      <a data-page="gallery">Gallery</a>
+      <a data-page="testimonials">Testimonials</a>
+      <a data-page="contact">Contact</a>
+      <a data-page="book" class="btn btn-gold">Book Now</a>
+      <div class="nav-mobile-contact">
+        <a href="tel:+254724756366"><span class="ic">📞</span> 072 475 6366</a>
+        <a href="https://wa.me/254724756366" target="_blank" rel="noopener"><span class="ic">💬</span> WhatsApp Us</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<div class="nav-backdrop" id="navBackdrop"></div>
+
+<main>
+
+<!-- ============ HOME ============ -->
+<section class="page" id="page-home">
+  <div class="hero">
+    <div class="hero-glow hero-glow-a" aria-hidden="true"></div>
+    <div class="hero-glow hero-glow-b" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <span class="eyebrow">Diani Beach, Kenya</span>
+      <h1>A Haven of <em>Mind</em>, Body &amp; Soul.</h1>
+      <p class="lead">Welcome to Zeph Haven Holistic Spa, where relaxation meets healing. We offer luxurious spa treatments designed to rejuvenate your mind, body and soul in a peaceful, welcoming environment — whether you're looking to unwind, relieve stress, or simply pamper yourself.</p>
+      <div class="hero-ctas">
+        <a data-page="book" class="btn btn-gold">Book an Appointment</a>
+        <a data-page="services" class="btn btn-outline-light">Explore Treatments</a>
+      </div>
+      <div class="hero-badges">
+        <span class="hero-badge">🕐 Open 24 Hours</span>
+        <span class="hero-badge">🔒 Private Treatment Rooms</span>
+        <span class="hero-badge">📍 Tradewinds Centre</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="quick-wrap">
+    <div class="quick-grid">
+      <a data-page="services" class="quick-card reveal">
+        <span class="quick-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 4c-2 3-2 7 0 10M15 4c2 3 2 7 0 10"/><path d="M6 14c0 4 3 6 6 6s6-2 6-6"/></svg></span>
+        <h4>Massages</h4>
+        <p>Swedish to hot stone</p>
+      </a>
+      <a data-page="services" class="quick-card reveal" style="transition-delay:.05s">
+        <span class="quick-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 4c3.5 4.5 5.5 7.5 5.5 10.2A5.5 5.5 0 1 1 6.5 14.2C6.5 11.5 8.5 8.5 12 4Z"/></svg></span>
+        <h4>Body Treatments</h4>
+        <p>Scrubs, polishes &amp; wraps</p>
+      </a>
+      <a data-page="services" class="quick-card reveal" style="transition-delay:.1s">
+        <span class="quick-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 19c9-1 13-6 14-14-8 1-13 5-14 14Z"/><path d="M5 19c1-4 4-8 9-11"/></svg></span>
+        <h4>Waxing</h4>
+        <p>Smooth, precise, gentle</p>
+      </a>
+      <a data-page="services" class="quick-card reveal" style="transition-delay:.15s">
+        <span class="quick-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8Z"/></svg></span>
+        <h4>Facials</h4>
+        <p>Cleansing to anti-ageing</p>
+      </a>
+    </div>
+  </div>
+
+  <svg class="tide" viewBox="0 0 1200 60" preserveAspectRatio="none"><path fill="var(--cream)" d="M0,30 C 200,10 400,50 600,30 C 800,10 1000,50 1200,30 L1200,60 L0,60 Z"/></svg>
+
+  <section>
+    <div class="wrap about-grid">
+      <div class="reveal">
+        <span class="eyebrow">About Us</span>
+        <h2>Self-care isn't a luxury.<br>It's essential.</h2>
+        <p>At Zeph Haven Holistic Spa, we believe self-care is essential, not a luxury. Our mission is to provide professional holistic wellness treatments that leave every guest feeling refreshed, restored, and renewed.</p>
+        <p>Our experienced therapists deliver personalised treatments using quality products, right in the heart of Diani Beach.</p>
+        <a data-page="about" class="btn btn-outline">More About Us →</a>
+      </div>
+      <div class="about-visual reveal" aria-hidden="true">
+        <div class="about-badge"><span class="ic">🌿</span><span>Holistic<br>Care</span></div>
+      </div>
+    </div>
+  </section>
+  <svg class="tide" viewBox="0 0 1200 60" preserveAspectRatio="none"><path fill="var(--cream-dark)" d="M0,30 C 200,50 400,10 600,30 C 800,50 1000,10 1200,30 L1200,60 L0,60 Z"/></svg>
+
+  <section style="background:var(--cream-dark);">
+    <div class="wrap">
+      <div class="center reveal" style="max-width:600px; margin-bottom:40px;">
+        <span class="eyebrow">Why Choose Us</span>
+        <h2>Every detail, considered</h2>
+      </div>
+      <div class="why-grid">
+        <div class="why-item reveal">
+          <span class="why-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21c-4-3-7-6.5-7-10.5A5 5 0 0 1 12 5a5 5 0 0 1 7 5.5C19 14.5 16 18 12 21Z"/></svg></span>
+          <h4>Professional Therapists</h4><p>Trained, experienced hands you can trust.</p>
+        </div>
+        <div class="why-item reveal" style="transition-delay:.05s">
+          <span class="why-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 18c3-6 5-9 8-14 3 5 5 8 8 14"/><path d="M4 18h16"/></svg></span>
+          <h4>Relaxing Environment</h4><p>A calm space built for real rest.</p>
+        </div>
+        <div class="why-item reveal" style="transition-delay:.1s">
+          <span class="why-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 4a8 8 0 1 0 8 8"/><path d="M12 4v8l5 3"/></svg></span>
+          <h4>Personalised Treatments</h4><p>Every session tailored to your needs.</p>
+        </div>
+        <div class="why-item reveal" style="transition-delay:.15s">
+          <span class="why-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 10h16"/></svg></span>
+          <h4>Private Treatment Rooms</h4><p>Your own quiet space, every visit.</p>
+        </div>
+      </div>
+      <div class="center reveal" style="margin-top:36px;"><a data-page="about" class="btn btn-outline">See Everything We Offer →</a></div>
+    </div>
+  </section>
+  <svg class="tide" viewBox="0 0 1200 60" preserveAspectRatio="none"><path fill="var(--cream)" d="M0,30 C 200,10 400,50 600,30 C 800,10 1000,50 1200,30 L1200,60 L0,60 Z"/></svg>
+
+  <section>
+    <div class="wrap">
+      <div class="center reveal" style="max-width:600px; margin-bottom:40px;">
+        <span class="eyebrow">Testimonials</span>
+        <h2>Words from our guests</h2>
+      </div>
+      <div class="testi-grid">
+        <div class="testi-card reveal"><p>One of the most relaxing experiences I've ever had. Highly recommended!</p><div class="testi-name">— Verified Guest</div></div>
+        <div class="testi-card reveal" style="transition-delay:.05s"><p>Professional staff and amazing ambience.</p><div class="testi-name">— Verified Guest</div></div>
+        <div class="testi-card reveal" style="transition-delay:.1s"><p>My favourite spa in Diani!</p><div class="testi-name">— Verified Guest</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap book-section center reveal" style="max-width:1160px;">
+      <span class="eyebrow">Ready to unwind?</span>
+      <h2 style="max-width:520px; margin-left:auto; margin-right:auto;">Reserve your escape at Zeph Haven</h2>
+      <p style="max-width:480px; margin:0 auto 26px;">Open 24 hours — night appointments available upon booking.</p>
+      <a data-page="book" class="btn btn-gold">Book an Appointment</a>
+    </div>
+  </section>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="page" id="page-about">
+  <div class="page-hero">
+    <span class="eyebrow">About Us</span>
+    <h1>A Haven of Mind, Body &amp; Soul</h1>
+    <p>Getting to know Zeph Haven Holistic Spa.</p>
+  </div>
+
+  <section>
+    <div class="wrap about-grid">
+      <div>
+        <span class="eyebrow">Our Story</span>
+        <h2>Self-care isn't a luxury. It's essential.</h2>
+        <p>At Zeph Haven Holistic Spa, we believe self-care is essential, not a luxury. Our mission is to provide professional holistic wellness treatments that leave every guest feeling refreshed, restored, and renewed.</p>
+        <p>Our experienced therapists are committed to delivering personalised treatments using quality products in a calm, relaxing environment — right in the heart of Diani Beach.</p>
+        <a data-page="book" class="btn btn-outline">Reserve Your Visit →</a>
+      </div>
+      <div class="about-visual" aria-hidden="true"></div>
+    </div>
+  </section>
+  <svg class="tide" viewBox="0 0 1200 60" preserveAspectRatio="none"><path fill="var(--cream-dark)" d="M0,30 C 200,50 400,10 600,30 C 800,50 1000,10 1200,30 L1200,60 L0,60 Z"/></svg>
+
+  <section style="background:var(--cream-dark);">
+    <div class="wrap">
+      <div class="center" style="max-width:600px; margin-bottom:40px;">
+        <span class="eyebrow">Why Choose Us</span>
+        <h2>Every detail, considered</h2>
+      </div>
+      <div class="why-grid">
+        <div class="why-item"><span class="mark">✓</span><h4>Professional Therapists</h4><p>Trained, experienced hands you can trust.</p></div>
+        <div class="why-item"><span class="mark">✓</span><h4>Relaxing Environment</h4><p>A calm space built for real rest.</p></div>
+        <div class="why-item"><span class="mark">✓</span><h4>Quality Products</h4><p>Only premium products touch your skin.</p></div>
+        <div class="why-item"><span class="mark">✓</span><h4>Affordable Luxury</h4><p>Spa-grade care without the price shock.</p></div>
+        <div class="why-item"><span class="mark">✓</span><h4>Personalised Treatments</h4><p>Every session tailored to your needs.</p></div>
+        <div class="why-item"><span class="mark">✓</span><h4>Excellent Service</h4><p>Warm, attentive care from arrival to departure.</p></div>
+        <div class="why-item"><span class="mark">✓</span><h4>Private Treatment Rooms</h4><p>Your own quiet space, every visit.</p></div>
+      </div>
+    </div>
+  </section>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section class="page" id="page-services">
+  <div class="page-hero">
+    <span class="eyebrow">Our Services</span>
+    <h1>Treatments for every kind of rest</h1>
+    <p>From deep tissue relief to bridal-ready skin, every treatment is tailored to you.</p>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <div class="tabs" id="tabs">
+        <button class="tab-btn active" data-tab="massages">Massages</button>
+        <button class="tab-btn" data-tab="body">Body Treatments</button>
+        <button class="tab-btn" data-tab="waxing">Waxing</button>
+        <button class="tab-btn" data-tab="facials">Facials</button>
+      </div>
+
+      <div class="service-panel active" id="panel-massages">
+        <div class="service-grid">
+          <div class="service-card"><span>Signature</span><h4>Swedish Massage</h4><p>Gentle, flowing strokes to ease tension and restore calm.</p></div>
+          <div class="service-card"><span>Therapeutic</span><h4>Deep Tissue Massage</h4><p>Focused pressure to release deep muscular knots.</p></div>
+          <div class="service-card"><span>Signature</span><h4>Aromatherapy Massage</h4><p>Essential oils blended to soothe body and mind.</p></div>
+          <div class="service-card"><span>Warming</span><h4>Hot Stone Massage</h4><p>Heated basalt stones melt away stubborn tension.</p></div>
+          <div class="service-card"><span>Textural</span><h4>Bamboo Massage</h4><p>Warmed bamboo canes roll out tightness with ease.</p></div>
+          <div class="service-card"><span>Traditional</span><h4>Thai Shiatsu Massage</h4><p>Stretch-based pressure-point therapy for full mobility.</p></div>
+          <div class="service-card"><span>Recovery</span><h4>Sports Massage</h4><p>Targeted work for active bodies and recovery days.</p></div>
+          <div class="service-card"><span>Gentle</span><h4>Pregnancy Massage</h4><p>Safe, side-lying comfort for mums-to-be.</p></div>
+          <div class="service-card"><span>Shared</span><h4>Couples Massage</h4><p>Side-by-side relaxation in a private treatment room.</p></div>
+          <div class="service-card"><span>Family</span><h4>Kids Massage</h4><p>Light, calming touch designed just for little ones.</p></div>
+        </div>
+      </div>
+
+      <div class="service-panel" id="panel-body">
+        <div class="service-grid">
+          <div class="service-card"><span>Exfoliating</span><h4>Body Scrub</h4><p>Buffs away dull skin, leaving you smooth and glowing.</p></div>
+          <div class="service-card"><span>Refining</span><h4>Body Polish</h4><p>A finishing treatment for soft, radiant skin all over.</p></div>
+          <div class="service-card"><span>Detoxifying</span><h4>Body Wrap</h4><p>Nourishing wraps that hydrate and firm the skin.</p></div>
+        </div>
+      </div>
+
+      <div class="service-panel" id="panel-waxing">
+        <div class="service-grid">
+          <div class="service-card"><span>Precision</span><h4>Brazilian Wax</h4><p>Thorough, gentle, and discreet.</p></div>
+          <div class="service-card"><span>Precision</span><h4>Bikini Wax</h4><p>Clean lines with minimal discomfort.</p></div>
+          <div class="service-card"><span>Precision</span><h4>Hollywood Wax</h4><p>Complete smoothness, expertly done.</p></div>
+          <div class="service-card"><span>Smoothing</span><h4>Full Leg Wax</h4><p>Silky-smooth legs from top to toe.</p></div>
+          <div class="service-card"><span>Smoothing</span><h4>Half Leg Wax</h4><p>A quicker option for smooth lower legs.</p></div>
+          <div class="service-card"><span>Quick</span><h4>Underarm Wax</h4><p>Fast, fuss-free underarm smoothing.</p></div>
+          <div class="service-card"><span>Smoothing</span><h4>Arm Wax</h4><p>Soft, hair-free arms in one session.</p></div>
+          <div class="service-card"><span>Precision</span><h4>Face Wax</h4><p>Gentle shaping for a clean, fresh look.</p></div>
+        </div>
+      </div>
+
+      <div class="service-panel" id="panel-facials">
+        <div class="service-grid">
+          <div class="service-card"><span>Purifying</span><h4>Deep Cleansing Facial</h4><p>Draws out impurities for clear, refreshed skin.</p></div>
+          <div class="service-card"><span>Nourishing</span><h4>Hydrating Facial</h4><p>Replenishes moisture for a plump, dewy glow.</p></div>
+          <div class="service-card"><span>Radiance</span><h4>Brightening Facial</h4><p>Evens tone and restores natural radiance.</p></div>
+          <div class="service-card"><span>Restorative</span><h4>Anti-Ageing Facial</h4><p>Firms and smooths for a youthful finish.</p></div>
+        </div>
+      </div>
+
+      <div class="center" style="margin-top:50px;"><a data-page="book" class="btn btn-gold">Book a Treatment</a></div>
+    </div>
+  </section>
+</section>
+
+<!-- ============ GALLERY ============ -->
+<section class="page" id="page-gallery">
+  <div class="page-hero">
+    <span class="eyebrow">Gallery</span>
+    <h1>A glimpse inside the haven</h1>
+    <p>Our space, our products, and the moments guests leave with.</p>
+  </div>
+  <section>
+    <div class="wrap">
+      <div class="gallery-grid">
+        <div class="g-item"><span>Reception</span></div>
+        <div class="g-item"><span>Massage Room</span></div>
+        <div class="g-item"><span>Treatment Room</span></div>
+        <div class="g-item"><span>Sauna</span></div>
+        <div class="g-item"><span>Products</span></div>
+        <div class="g-item"><span>Happy Client</span></div>
+        <div class="g-item"><span>Our Team</span></div>
+      </div>
+      <p style="font-size:.85rem; margin-top:20px;">These tiles are placeholders — replace each with your own photos. See the comment below in the code.</p>
+      <!--
+        TO ADD REAL PHOTOS: replace each `<div class="g-item">` with an <img>, e.g.
+        <div class="g-item"><img src="photos/reception.jpg" alt="Reception"><span>Reception</span></div>
+        and add to the CSS: `.g-item{ position:relative; } .g-item img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }`
+      -->
+    </div>
+  </section>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section class="page" id="page-testimonials">
+  <div class="page-hero">
+    <span class="eyebrow">Testimonials</span>
+    <h1>Words from our guests</h1>
+    <p>Real feedback from the people who've relaxed with us.</p>
+  </div>
+  <section>
+    <div class="wrap">
+      <div class="testi-grid">
+        <div class="testi-card"><p>One of the most relaxing experiences I've ever had. Highly recommended!</p><div class="testi-name">— Verified Guest</div></div>
+        <div class="testi-card"><p>Professional staff and amazing ambience.</p><div class="testi-name">— Verified Guest</div></div>
+        <div class="testi-card"><p>My favourite spa in Diani!</p><div class="testi-name">— Verified Guest</div></div>
+      </div>
+      <div class="center" style="margin-top:50px;"><a data-page="book" class="btn btn-gold">Book Your Own Experience</a></div>
+    </div>
+  </section>
+</section>
+
+<!-- ============ BOOK ============ -->
+<section class="page" id="page-book">
+  <div class="page-hero">
+    <span class="eyebrow">Book an Appointment</span>
+    <h1>Reserve your escape</h1>
+    <p>Tell us what you need and we'll confirm your slot by phone or WhatsApp.</p>
+  </div>
+  <section>
+    <div class="wrap">
+      <div class="book-grid book-section">
+        <div>
+          <span class="eyebrow">Details</span>
+          <h2>We can't wait to host you</h2>
+          <p>Night appointments available on request — just let us know your preferred time.</p>
+          <div class="book-info-item"><span class="ic">📍</span><div><strong>Location</strong>Tradewinds Centre, Diani Beach, Kenya</div></div>
+          <div class="book-info-item"><span class="ic">🕐</span><div><strong>Hours</strong>Open 24 hours · night appointments upon booking</div></div>
+          <div class="book-info-item"><span class="ic">📞</span><div><strong>Call / WhatsApp</strong><a href="tel:+254724756366">072 475 6366</a></div></div>
+        </div>
+        <form id="bookingForm">
+          <div><label for="f-name">Name</label><input id="f-name" name="name" required placeholder="Your full name"></div>
+          <div><label for="f-phone">Phone Number</label><input id="f-phone" name="phone" required placeholder="07xx xxx xxx"></div>
+          <div class="full"><label for="f-email">Email</label><input id="f-email" type="email" name="email" required placeholder="you@example.com"></div>
+          <div><label for="f-service">Service Required</label>
+            <select id="f-service" name="service" required>
+              <option value="">Select a service</option>
+              <optgroup label="Massages">
+                <option>Swedish Massage</option><option>Deep Tissue Massage</option><option>Aromatherapy Massage</option>
+                <option>Hot Stone Massage</option><option>Bamboo Massage</option><option>Thai Shiatsu Massage</option>
+                <option>Sports Massage</option><option>Pregnancy Massage</option><option>Couples Massage</option><option>Kids Massage</option>
+              </optgroup>
+              <optgroup label="Body Treatments"><option>Body Scrub</option><option>Body Polish</option><option>Body Wrap</option></optgroup>
+              <optgroup label="Waxing">
+                <option>Brazilian Wax</option><option>Bikini Wax</option><option>Hollywood Wax</option><option>Full Leg Wax</option>
+                <option>Half Leg Wax</option><option>Underarm Wax</option><option>Arm Wax</option><option>Face Wax</option>
+              </optgroup>
+              <optgroup label="Facials">
+                <option>Deep Cleansing Facial</option><option>Hydrating Facial</option><option>Brightening Facial</option><option>Anti-Ageing Facial</option>
+              </optgroup>
+            </select>
+          </div>
+          <div><label for="f-date">Preferred Date</label><input id="f-date" type="date" name="date" required></div>
+          <div class="full"><label for="f-time">Preferred Time</label><input id="f-time" type="time" name="time" required></div>
+          <div class="full"><label for="f-notes">Special Requests</label><textarea id="f-notes" name="notes" placeholder="Anything we should know?"></textarea></div>
+          <div class="full">
+            <button type="submit" class="btn btn-gold" style="width:100%; justify-content:center;" id="submitBtn">Request Booking</button>
+            <div id="formMsg"></div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="page" id="page-contact">
+  <div class="page-hero">
+    <span class="eyebrow">Contact Us</span>
+    <h1>Find your way to the haven</h1>
+    <p>Tradewinds Centre, Diani Beach, Kenya.</p>
+  </div>
+  <section>
+    <div class="wrap">
+      <div class="contact-grid">
+        <div>
+          <div class="contact-list">
+            <a href="https://maps.google.com/?q=Tradewinds+Centre+Diani+Beach+Kenya" target="_blank" rel="noopener"><span class="ic">📍</span> Tradewinds Centre, Diani Beach, Kenya</a>
+            <a href="tel:+254724756366"><span class="ic">📞</span> 072 475 6366</a>
+            <a href="https://wa.me/254724756366" target="_blank" rel="noopener"><span class="ic">💬</span> WhatsApp: 072 475 6366</a>
+            <a href="mailto:zephhaven3@gmail.com"><span class="ic">📧</span> zephhaven3@gmail.com</a>
+            <a href="#" onclick="return false;"><span class="ic">🕐</span> Open 24 Hours · Night appointments upon booking</a>
+          </div>
+          <div style="margin-top:36px;">
+            <span class="eyebrow">Follow Along</span>
+            <div class="social-row" style="justify-content:flex-start;">
+              <a class="social-pill" href="#" target="_blank" rel="noopener">📷 Instagram</a>
+              <a class="social-pill" href="#" target="_blank" rel="noopener">👍 Facebook</a>
+              <a class="social-pill" href="#" target="_blank" rel="noopener">🎵 TikTok</a>
+              <a class="social-pill" href="https://maps.google.com/?q=Tradewinds+Centre+Diani+Beach+Kenya" target="_blank" rel="noopener">📍 Google Maps</a>
+            </div>
+            <p style="font-size:.75rem; margin-top:14px;">Add your real profile links in the code — see the social-row section.</p>
+          </div>
+        </div>
+        <div class="map-frame">
+          <iframe src="https://maps.google.com/maps?q=Tradewinds%20Centre%20Diani%20Beach%20Kenya&t=&z=15&ie=UTF8&iwloc=&output=embed" loading="lazy" title="Zeph Haven Holistic Spa location"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <h3>Zeph Haven Holistic Spa</h3>
+      <p style="color:rgba(255,253,248,.7);">A Haven of Mind, Body &amp; Soul.</p>
+      <p style="color:rgba(255,253,248,.5); font-size:.85rem;">Tradewinds Centre, Diani Beach, Kenya</p>
+    </div>
+    <div>
+      <h3>Contact</h3>
+      <p><a href="tel:+254724756366">☎ 254 724 756 366</a></p>
+      <p><a href="mailto:zephhaven3@gmail.com">📧 zephhaven3@gmail.com</a></p>
+    </div>
+    <div>
+      <h3>Follow Us</h3>
+      <p><a href="#" target="_blank" rel="noopener">Instagram</a></p>
+      <p><a href="#" target="_blank" rel="noopener">Facebook</a></p>
+      <p><a href="#" target="_blank" rel="noopener">TikTok</a></p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© <span id="year"></span> Zeph Haven Holistic Spa. All rights reserved.</span>
+    <span>Diani Beach · Kenya</span>
+  </div>
+</footer>
+
+<a class="float-wa" href="https://wa.me/254724756366" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">💬</a>
+
+<script>
+/* ===================== PAGE ROUTING (SPA, single file) ===================== */
+const TITLES = {
+  home: "Zeph Haven Holistic Spa | Luxury Spa & Massage in Diani Beach, Kenya",
+  about: "About Us | Zeph Haven Holistic Spa, Diani Beach",
+  services: "Our Services | Massages, Facials & Waxing in Diani Beach",
+  gallery: "Gallery | Zeph Haven Holistic Spa, Diani Beach",
+  testimonials: "Testimonials | Zeph Haven Holistic Spa, Diani Beach",
+  book: "Book an Appointment | Zeph Haven Holistic Spa, Diani Beach",
+  contact: "Contact Us | Zeph Haven Holistic Spa, Diani Beach"
+};
+
+function showPage(pageId, pushHistory) {
+  if (!document.getElementById('page-' + pageId)) pageId = 'home';
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + pageId).classList.add('active');
+  document.querySelectorAll('[data-page]').forEach(el => {
+    el.classList.toggle('current', el.dataset.page === pageId && el.closest('nav.nav-links'));
+  });
+  document.title = TITLES[pageId] || TITLES.home;
+  window.scrollTo({ top: 0, behavior: 'auto' });
+  if (pushHistory) history.pushState({ page: pageId }, '', '#' + pageId);
+}
+
+document.querySelectorAll('[data-page]').forEach(el => {
+  el.addEventListener('click', (e) => {
+    e.preventDefault();
+    showPage(el.dataset.page, true);
+    closeMenu();
+  });
+});
+
+window.addEventListener('popstate', () => {
+  showPage((location.hash || '#home').slice(1), false);
+});
+
+// initial load
+showPage((location.hash || '#home').slice(1), false);
+
+/* ===================== Mobile nav toggle ===================== */
+const menuToggle = document.getElementById('menuToggle');
+const navLinks = document.getElementById('navLinks');
+const backdrop = document.getElementById('navBackdrop');
+
+function closeMenu() {
+  navLinks.classList.remove('is-open');
+  menuToggle.classList.remove('is-active');
+  menuToggle.setAttribute('aria-expanded', 'false');
+  document.body.classList.remove('nav-open');
+  backdrop.classList.remove('is-open');
+}
+function openMenu() {
+  navLinks.classList.add('is-open');
+  menuToggle.classList.add('is-active');
+  menuToggle.setAttribute('aria-expanded', 'true');
+  document.body.classList.add('nav-open');
+  backdrop.classList.add('is-open');
+}
+menuToggle.addEventListener('click', () => {
+  navLinks.classList.contains('is-open') ? closeMenu() : openMenu();
+});
+backdrop.addEventListener('click', closeMenu);
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+document.querySelectorAll('.nav-mobile-contact a').forEach(a => a.addEventListener('click', closeMenu));
+
+/* ===================== Header scroll shrink ===================== */
+const siteHeader = document.querySelector('header.site-header');
+function onHeaderScroll() {
+  siteHeader.classList.toggle('scrolled', window.scrollY > 24);
+}
+window.addEventListener('scroll', onHeaderScroll, { passive: true });
+onHeaderScroll();
+
+/* ===================== Service tabs ===================== */
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.service-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+  });
+});
+
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* ===================== Scroll reveal ===================== */
+function initReveal() {
+  const els = document.querySelectorAll('.reveal:not(.in)');
+  if (!('IntersectionObserver' in window) || !els.length) {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+    return;
+  }
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  els.forEach(el => io.observe(el));
+}
+initReveal();
+// re-check whenever a page becomes visible (e.g. navigating back to Home)
+const _origShowPage = showPage;
+showPage = function(pageId, pushHistory) {
+  _origShowPage(pageId, pushHistory);
+  initReveal();
+};
+
+
+/* ===================== Booking form ===================== */
+/* SUPABASE CONFIG
+   1. Create a free project at https://supabase.com
+   2. Run this SQL in the SQL editor:
+
+      create table bookings (
+        id uuid primary key default gen_random_uuid(),
+        created_at timestamptz default now(),
+        name text not null,
+        phone text not null,
+        email text not null,
+        service text not null,
+        preferred_date date not null,
+        preferred_time time not null,
+        notes text
+      );
+      alter table bookings enable row level security;
+      create policy "public can insert bookings" on bookings
+        for insert to anon with check (true);
+
+   3. Paste your Project URL and anon public key below.
+      Until you do, the form runs in DEMO MODE and simply
+      stores bookings in this browser's localStorage so you
+      can still test it end-to-end.
+*/
+const SUPABASE_URL = "https://rthvegacmcbcqbyqraps.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ0aHZlZ2FjbWNiY3FieXFyYXBzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc5OTMyMDMsImV4cCI6MjEwMzU2OTIwM30.ORN1wogK0Xi1sQL84-qt9MQGaxJ0VTwWG87PMEGEmbY";
+
+let sbClient = null;
+const demoMode = SUPABASE_URL.startsWith("YOUR_") || SUPABASE_ANON_KEY.startsWith("YOUR_");
+
+function getSupabase() {
+  if (demoMode) return null;
+  if (!sbClient) {
+    if (!window.supabase) {
+      throw new Error('Supabase client library has not finished loading yet. Please try again in a moment.');
+    }
+    sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  }
+  return sbClient;
+}
+
+const ZEPH_WHATSAPP_NUMBER = "254724756366";
+
+function buildWhatsAppLink(payload) {
+  const message =
+`Hello Zeph Haven, I'd like to book an appointment.
+Name: ${payload.name}
+Phone: ${payload.phone}
+Email: ${payload.email || 'Not provided'}
+Service: ${payload.service}
+Preferred date: ${payload.preferred_date || 'Not specified'}
+Preferred time: ${payload.preferred_time || 'Not specified'}
+Special requests: ${payload.notes || 'None'}`;
+  return `https://wa.me/${ZEPH_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+}
+
+const form = document.getElementById('bookingForm');
+const msg = document.getElementById('formMsg');
+const submitBtn = document.getElementById('submitBtn');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  msg.className = ''; msg.textContent = '';
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Sending...';
+
+  const payload = {
+    name: form.name.value.trim(),
+    phone: form.phone.value.trim(),
+    email: form.email.value.trim(),
+    service: form.service.value,
+    preferred_date: form.date.value,
+    preferred_time: form.time.value,
+    notes: form.notes.value.trim()
+  };
+
+  try {
+    if (demoMode) {
+      const key = 'zephhaven_bookings';
+      const existing = JSON.parse(localStorage.getItem(key) || '[]');
+      existing.push({ ...payload, created_at: new Date().toISOString() });
+      localStorage.setItem(key, JSON.stringify(existing));
+    } else {
+      const client = getSupabase();
+      const { error } = await client.from('bookings').insert([payload]);
+      if (error) throw error;
+    }
+    msg.className = 'ok';
+    msg.textContent = '✓ Request received! Opening WhatsApp so you can confirm with us directly…';
+    form.reset();
+    setTimeout(() => {
+      window.location.href = buildWhatsAppLink(payload);
+    }, 900);
+  } catch (err) {
+    msg.className = 'err';
+    msg.textContent = '⚠ Something went wrong. Please try again or WhatsApp us directly.';
+    console.error(err);
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Request Booking';
+  }
+
+});
+</script>
+</body>
+</html>
